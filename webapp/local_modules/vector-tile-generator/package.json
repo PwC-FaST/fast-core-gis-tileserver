@@ -1,0 +1,14 @@
+{
+  "name": "vector-tile-generator",
+  "version": "1.0.0",
+  "description": "Generate MVT tile from GeoJSON data",
+  "main": "index.js",
+  "repository": "https://github.com/ec-europa",
+  "license": "EUPL-1.1 ",
+  "author": "Clément NERO",
+  "dependencies": {
+    "@mapbox/sphericalmercator": "^1.1.0",
+    "geojson-vt": "^3.2.1",
+    "vt-pbf": "^3.1.1"
+  }
+}

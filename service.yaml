@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tile-server
+  namespace: fast-platform
+  labels:
+    platform: fast
+    module: core
+    domain: gis
+    app: tile-server
+spec:
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 3000
+  selector:
+    platform: fast
+    module: core
+    domain: gis
+    app: tile-server
+  type: ClusterIP

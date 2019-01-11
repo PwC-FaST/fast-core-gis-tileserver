@@ -1,0 +1,21 @@
+{
+  "name": "tile-server",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "@mapbox/sphericalmercator": "1.1.0",
+    "cookie-parser": "~1.4.3",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "geojson-vt": "^3.2.1",
+    "http-errors": "~1.6.2",
+    "mongodb": "*",
+    "mongoose": "*",
+    "morgan": "~1.9.0",
+    "pug": "2.0.0-beta11"
+  }
+}

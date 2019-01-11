@@ -1,0 +1,16 @@
+doctype html
+html
+    head
+        title= title
+        link(rel='stylesheet', href='https://unpkg.com/leaflet@1.3.4/dist/leaflet.css')
+        link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.14/leaflet.draw.css')
+        link(rel='stylesheet', href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css')
+        link(rel='stylesheet', href=urlPrefix+`stylesheets/style.css`)
+        script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+        script(src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js')
+        script(src='https://unpkg.com/leaflet@1.3.4/dist/leaflet.js')
+        script(src="https://unpkg.com/leaflet.vectorgrid@1.3.0")
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.14/leaflet.draw.js')
+        script(src='https://unpkg.com/leaflet.vectorgrid@1.2.0')
+    body
+        block content

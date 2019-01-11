@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: tile-server
+  namespace: fast-platform
+  labels:
+    platform: fast
+    module: core
+    domain: gis
+    app: tile-server
+spec:
+  rules:
+  - host: map.fast.sobloo.io
+    http:
+      paths:
+      - backend:
+          serviceName: tile-server
+          servicePort: http
+        path: /

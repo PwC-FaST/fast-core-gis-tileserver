@@ -1,0 +1,65 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: tile-server
+  namespace: fast-platform
+  labels:
+    platform: fast
+    module: core
+    domain: gis
+    app: tile-server
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        platform: fast
+        module: core
+        domain: gis
+        app: tile-server
+    spec:
+      containers:
+      - name: server
+        image: eufast/tile-server:0.1.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+          protocol: TCP
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: 2
+            memory: 2Gi
+        env:
+        - name: MONGODB_HOST
+          value: mongodb.mongodb
+        - name: TARGET_DB
+          value: fast
+        - name: LPIS_COLLECTION
+          value: lpis
+        - name: SOC_COLLECTION
+          value: soc
+        - name: HYDRO_COLLECTION
+          value: hydro
+        - name: NATURA2000_COLLECTION
+          value: natura2000
+        - name: TOPSOIL_COLLECTION
+          value: topsoil
+        - name: FRONTEND_URL_PREFIX
+          value: /
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 3000
+            scheme: HTTP
+          initialDelaySeconds: 1
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 3000
+            scheme: HTTP
+          initialDelaySeconds: 1
+          periodSeconds: 5

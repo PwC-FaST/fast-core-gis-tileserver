@@ -1,0 +1,167 @@
+extends layout.pug
+block content
+    #map
+
+    script(type='text/javascript').
+
+        var vectorTileStyling = {
+            lpis: {
+                fill: true,
+                weight: 2,
+                fillColor: '#e5b404',
+                color: '#e5b404',
+                fillOpacity: 0.2,
+                opacity: 0.4
+            },
+            soc: {
+                fill: true,
+                weight: 2,
+                fillColor: '#3bb50a',
+                color: '#3bb50a',
+                fillOpacity: 0.7,
+                opacity: 0.9,
+                radius: 5
+            },
+            hydro: {
+                fill: true,
+                weight: 2,
+                fillColor: '#06cccc',
+                color: '#06cccc',
+                fillOpacity: 0.2,
+                opacity: 0.4
+            },
+            natura2000: {
+                fill: true,
+                weight: 2,
+                fillColor: '#53e033',
+                color: '#53e033',
+                fillOpacity: 0.2,
+                opacity: 0.4
+            },
+            topsoil: {
+                fill: true,
+                weight: 2,
+                fillColor: '#e2be30',
+                color: '#e2be30',
+                fillOpacity: 0.7,
+                opacity: 0.9,
+                radius: 5
+            }
+        };
+
+        // Initialize a Leaflet map
+        var map = L.map('map').setView([43.468,1.268], 16);
+
+        // Base layer (Google Layer)
+        var googleLayer = L.tileLayer(
+            'http://www.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}&y={y}&z={z}',
+            {
+                attribution: '| <a href="http://map.fast.sobloo.io">FaST</a> | &copy; Google'
+            }).addTo(map);
+
+        var googleLayerHybrid = L.tileLayer(
+            'http://www.google.cn/maps/vt?lyrs=y@189&gl=cn&x={x}&y={y}&z={z}',
+            {
+                attribution: '| <a href="http://map.fast.sobloo.io">FaST</a> | &copy; Google'
+            }).addTo(map);
+
+        // LPIS layer
+        var lpisURL = '/layer/lpis/{z}/{x}/{y}.pbf';
+        var lpisOptions = {
+            rendererFactory: L.svg.tile,
+            vectorTileLayerStyles: vectorTileStyling,
+            interactive: true,
+            getFeatureId: function (feat) {
+                return feat.id;
+            }
+        };
+        var lpisLayer = L.vectorGrid
+            .protobuf(lpisURL,lpisOptions)
+            .on('click', function (e) {
+                console.log(e.layer.properties);
+            });
+
+        // ESDAC LUCASSOC layer
+        var socURL = '/layer/esdac/soc/{z}/{x}/{y}.pbf';
+        var socOptions = {
+            rendererFactory: L.svg.tile,
+            vectorTileLayerStyles: vectorTileStyling,
+            interactive: true,
+            getFeatureId: function (feat) {
+                return feat.id;
+            }
+        };
+        var socLayer = L.vectorGrid
+            .protobuf(socURL, socOptions)
+            .on('click', function (e) {
+                console.log(e.layer.properties)
+            });
+
+        // HYDRO layer
+        var hydroURL = '/layer/hydro/{z}/{x}/{y}.pbf';
+        var hydroOptions = {
+            rendererFactory: L.svg.tile,
+            vectorTileLayerStyles: vectorTileStyling,
+            interactive: true,
+            getFeatureId: function (feat) {
+                return feat.id;
+            }
+        };
+        var hydroLayer = L.vectorGrid
+            .protobuf(hydroURL, hydroOptions)
+            .on('click', function (e) {
+                console.log(e.layer.properties)
+            });
+
+        // NATURA2000 layer
+        var natura2000URL = '/layer/natura2000/{z}/{x}/{y}.pbf';
+        var natura2000Options = {
+            rendererFactory: L.svg.tile,
+            vectorTileLayerStyles: vectorTileStyling,
+            interactive: true,
+            getFeatureId: function (feat) {
+                return feat.id;
+            }
+        };
+        var natura2000Layer = L.vectorGrid
+            .protobuf(natura2000URL, natura2000Options)
+            .on('click', function (e) {
+                console.log(e.layer.properties)
+            });
+
+        // TOPSOIL layer
+        var topsoilURL = '/layer/topsoil/{z}/{x}/{y}.pbf';
+        var topsoilOptions = {
+            rendererFactory: L.svg.tile,
+            vectorTileLayerStyles: vectorTileStyling,
+            interactive: true,
+            getFeatureId: function (feat) {
+                return feat.id;
+            }
+        };
+        var topsoilLayer = L.vectorGrid
+            .protobuf(topsoilURL, topsoilOptions)
+            .on('click', function (e) {
+                console.log(e.layer.properties)
+            });
+
+        // Add a control for layer selection
+        L.control
+            .layers(
+                {
+                    "Google Hybrid": googleLayerHybrid,
+                    "Google Satellite": googleLayer
+                },
+                {
+                    "HYDRO layer": hydroLayer,
+                    "LPIS layer": lpisLayer,
+                    "NATURA2000 layer": natura2000Layer,
+                    "SOC layer": socLayer,
+                    "TOPSOIL layer": topsoilLayer
+                },
+                {collapsed: false})
+            .addTo(map);
+
+        // Display LPIS layer by default
+        lpisLayer.addTo(map)
+
